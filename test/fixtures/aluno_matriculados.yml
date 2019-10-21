@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  disciplina: one
+  aluno: one
+  ano: 1
+
+two:
+  disciplina: two
+  aluno: two
+  ano: 1

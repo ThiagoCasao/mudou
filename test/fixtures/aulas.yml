@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  disciplina: one
+  data: 2019-10-14
+  duracao: 1
+  titulo: MyString
+  objetivo: MyText
+  ata: MyText
+
+two:
+  disciplina: two
+  data: 2019-10-14
+  duracao: 1
+  titulo: MyString
+  objetivo: MyText
+  ata: MyText

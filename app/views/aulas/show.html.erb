@@ -1,0 +1,34 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Disciplina:</strong>
+  <%= @aula.disciplina %>
+</p>
+
+<p>
+  <strong>Data:</strong>
+  <%= @aula.data %>
+</p>
+
+<p>
+  <strong>Duracao:</strong>
+  <%= @aula.duracao %>
+</p>
+
+<p>
+  <strong>Titulo:</strong>
+  <%= @aula.titulo %>
+</p>
+
+<p>
+  <strong>Objetivo:</strong>
+  <%= @aula.objetivo %>
+</p>
+
+<p>
+  <strong>Ata:</strong>
+  <%= @aula.ata %>
+</p>
+
+<%= link_to 'Edit', edit_aula_path(@aula) %> |
+<%= link_to 'Back', aulas_path %>
