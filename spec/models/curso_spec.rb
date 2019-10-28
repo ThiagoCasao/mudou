@@ -1,9 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe Curso, type: :model do
-  # it ( should belong_to(:coordenador) )
-
-  context "Validações gerais:" do
+  context 'Validações gerais:' do
+    it { should belong_to(:coordenador).class_name('Pessoa') }
     it { should validate_presence_of(:nome) }
   end
 
