@@ -1,5 +1,6 @@
 class Disciplina < ApplicationRecord
   belongs_to :curso
+  belongs_to :professor, class_name: 'Pessoa'
 
   validates :nome, :semestre, presence: true
   validates :semestre, numericality: { greater_than_or_equal_to: 1,
