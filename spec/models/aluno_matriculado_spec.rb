@@ -3,9 +3,10 @@ require 'rails_helper'
 RSpec.describe AlunoMatriculado, type: :model do
 
   context 'validações gerais' do
-    it { should belong_to(:disciplina) } 
+    it { should belong_to(:disciplina) }
     it { should belong_to(:aluno).class_name('Pessoa') } 
     it { should validate_presence_of(:ano) }
+    it { should validate_numericality_of(:ano).only_integer.is_less_than_or_equal_to(Date.today.year) }
   end
 
   context 'ao matricular o aluno ' do
@@ -38,7 +39,7 @@ RSpec.describe AlunoMatriculado, type: :model do
 
       it 'e em anos diferentes, deve permitir' do
         matricula.save
-        matricula_repetida.ano = 2020
+        matricula_repetida.ano = 2018
         expect(matricula_repetida).to be_valid
       end
     end

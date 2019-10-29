@@ -7,7 +7,7 @@ RSpec.describe AlunoPresente, type: :model do
     it { should belong_to(:aluno).class_name('Pessoa') } 
   end
 
-  context 'ao informar mesmo aluno em mesma aula' do
+  context 'ao informar aluno' do
     let(:aluno) { Pessoa.new(perfil: :aluno, 
                              nome: 'Tião Macalé') }
     let(:professor) { Pessoa.new(perfil: :professor, 
@@ -29,12 +29,31 @@ RSpec.describe AlunoPresente, type: :model do
                           ata: 'Coisas testadas') }
     let(:presenca) { AlunoPresente.new(aula: aula, 
                                        aluno: aluno) }
-    let(:presenca_repetida) { AlunoPresente.new(aula: aula, 
-                                                aluno: aluno) }
+    
+    context 'duas vezes na mesma aula' do    
+      let(:presenca_repetida) { AlunoPresente.new(aula: aula, 
+                                                  aluno: aluno) }
  
-    it 'deve validar que não pode repetir aluno' do
-      presenca.save
-      expect(presenca_repetida).to_not be_valid
+      it 'deve validar' do
+        presenca.save
+        expect(presenca_repetida).to_not be_valid
+      end
+    end
+
+    context 'em aulas diferentes' do
+      let(:aula2) { Aula.new(disciplina: disciplina,
+                            titulo: 'TDD',
+                            data: Date.today,
+                            duracao: 40,
+                            objetivo: 'Testar coisas',
+                            ata: 'Coisas testadas') }      
+      let(:presenca2) { AlunoPresente.new(aula: aula2, 
+                                          aluno: aluno) }
+
+      it 'deve permitir' do
+        presenca.save
+        expect(presenca2).to be_valid
+      end
     end
 
   end
