@@ -8,31 +8,14 @@ RSpec.describe AlunoPresente, type: :model do
   end
 
   context 'ao informar aluno' do
-    let(:aluno) { Pessoa.new(perfil: :aluno, 
-                             nome: 'Tião Macalé') }
-    let(:professor) { Pessoa.new(perfil: :professor, 
-                                 nome: 'Joaquim Teixeira') }
-    let(:coordenador) { Pessoa.new(perfil: :coordenador, 
-                                   nome: 'Fábio Taffe') }
-
-    let(:curso) { Curso.new(nome: 'Sistemas de Informação', 
-                            coordenador: coordenador) }
-    let(:disciplina) { Disciplina.new(curso: curso, 
-                                      nome: 'Eng. SW III',
-                                      professor: professor, 
-                                      semestre: 4) }
-    let(:aula) { Aula.new(disciplina: disciplina,
-                          titulo: 'TDD',
-                          data: Date.today,
-                          duracao: 40,
-                          objetivo: 'Testar coisas',
-                          ata: 'Coisas testadas') }
+    let(:matricula) { FactoryBot.create(:matricula) }
+    let(:aula) { FactoryBot.create(:aula, disciplina: matricula.disciplina) }
     let(:presenca) { AlunoPresente.new(aula: aula, 
-                                       aluno: aluno) }
+                                       aluno: matricula.aluno) }
     
     context 'duas vezes na mesma aula' do    
       let(:presenca_repetida) { AlunoPresente.new(aula: aula, 
-                                                  aluno: aluno) }
+                                                  aluno: matricula.aluno) }
  
       it 'deve validar' do
         presenca.save
@@ -41,14 +24,9 @@ RSpec.describe AlunoPresente, type: :model do
     end
 
     context 'em aulas diferentes' do
-      let(:aula2) { Aula.new(disciplina: disciplina,
-                            titulo: 'TDD',
-                            data: Date.today,
-                            duracao: 40,
-                            objetivo: 'Testar coisas',
-                            ata: 'Coisas testadas') }      
+      let(:aula2) { FactoryBot.create(:aula, disciplina: matricula.disciplina) }      
       let(:presenca2) { AlunoPresente.new(aula: aula2, 
-                                          aluno: aluno) }
+                                          aluno: matricula.aluno) }
 
       it 'deve permitir' do
         presenca.save
