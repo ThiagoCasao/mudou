@@ -10,50 +10,26 @@ RSpec.describe AlunoMatriculado, type: :model do
   end
 
   context 'ao matricular o aluno ' do
-    let(:aluno) { Pessoa.new(perfil: :aluno, 
-                             nome: 'Tião Macalé') }
-    let(:professor) { Pessoa.new(perfil: :professor, 
-                                 nome: 'Joaquim Teixeira') }
-    let(:coordenador) { Pessoa.new(perfil: :coordenador, 
-                                   nome: 'Fábio Taffe') }
-
-    let(:curso) { Curso.new(nome: 'Sistemas de Informação', 
-                            coordenador: coordenador) }
-    let(:disciplina) { Disciplina.new(curso: curso, 
-                                      nome: 'Eng. SW III',
-                                      professor: professor, 
-                                      semestre: 4) }
-    let(:matricula) { AlunoMatriculado.new(ano: 2019, 
-                                           disciplina: disciplina, 
-                                           aluno: aluno) }
+    let(:matricula) { FactoryBot.create(:matricula) }
 
     context 'duas vezes na mesma disciplina' do
-      let(:matricula_repetida) { AlunoMatriculado.new(ano: 2019, 
-                                                      disciplina: disciplina, 
-                                                      aluno: aluno) }
+      let(:matricula_repetida) { FactoryBot.build(:matricula,
+                                                  disciplina: matricula.disciplina,
+                                                  aluno: matricula.aluno) }
 
       it 'e no mesmo ano, deve bloquear' do
-        matricula.save
         expect(matricula_repetida).to_not be_valid
       end
 
       it 'e em anos diferentes, deve permitir' do
-        matricula.save
         matricula_repetida.ano = 2018
         expect(matricula_repetida).to be_valid
       end
     end
 
     context 'em duas disciplinas distintas no mesmo ano' do
-      let(:disciplina2) { Disciplina.new(curso: curso, 
-                                         nome: 'Design de Interação',
-                                         professor: professor, 
-                                         semestre: 5) }
-      let(:matricula2) { AlunoMatriculado.new(ano: 2019, 
-                                              disciplina: disciplina2, 
-                                              aluno: aluno) }
+      let(:matricula2) { FactoryBot.build(:matricula) }
       it 'deve permitir' do
-        matricula.save
         expect(matricula2).to be_valid
       end
     end
